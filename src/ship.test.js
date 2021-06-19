@@ -11,21 +11,26 @@ test("When passed invalid ship type, throw error", () => {
   }).toThrowError(new Error("Invalid ship type"));
 });
 
-test("Carrier registers hit in 3rd sector", () => {
+test("Ship registers hit", () => {
   let testShip = ship("carrier");
-  testShip.registerHit(2);
-  expect(testShip.hits).toEqual([0, 0, 1, 0, 0]);
-});
-
-test("Hit one tile outside ship length throws error", () => {
-  expect(() => ship("carrier").registerHit(5)).toThrowError(
-    new Error("Invalid hit location, outside ship length")
-  );
+  testShip.gridLocations = [
+    [3, 4],
+    [3, 5],
+    [3, 6],
+    [3, 7],
+    [3, 8],
+  ];
+  testShip.registerHit(3, 6);
+  expect(testShip.hits).toEqual([[3, 6]]);
 });
 
 test("Ship that has been fully destroyed registers as sunk", () => {
   let testShip = ship("patrolBoat");
-  testShip.registerHit(0);
-  testShip.registerHit(1);
+  testShip.gridLocations = [
+    [3, 4],
+    [3, 5],
+  ];
+  testShip.registerHit(3, 4);
+  testShip.registerHit(3, 5);
   expect(testShip.isSunk()).toBe(true);
 });

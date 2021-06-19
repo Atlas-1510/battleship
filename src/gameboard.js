@@ -11,6 +11,8 @@ function gameboard() {
     };
   }
 
+  let ships = [];
+
   function placeShip(coords, ship, direction) {
     const [x, y] = coords;
 
@@ -26,10 +28,30 @@ function gameboard() {
         shipType: ship.type,
         hit: false,
       };
+
+      ship.gridLocations.push([a, b]);
+    }
+
+    ships.push(ship);
+  }
+
+  function recieveAttack(x, y) {
+    let tile = grid[x][y];
+    if (tile.hit) {
+      throw new Error("This tile has already been fired upon");
+    }
+    tile.hit = true;
+
+    if (tile.occupied) {
+      ships.forEach((ship) => {
+        if (ship.type === tile.shipType) {
+          ship.registerHit(x, y);
+        }
+      });
     }
   }
 
-  return { grid, placeShip };
+  return { grid, ships, placeShip, recieveAttack };
 }
 
 export default gameboard;

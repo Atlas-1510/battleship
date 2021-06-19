@@ -17,24 +17,36 @@ function ship(type) {
 
   const length = shipTypes[type];
 
-  let hits = new Array(length).fill(0);
+  let hits = [];
+  let gridLocations = [];
 
-  function registerHit(sector) {
-    if (sector > length - 1) {
-      throw new Error("Invalid hit location, outside ship length");
-    } else {
-      hits[sector] = 1;
+  function registerHit(x, y) {
+    let errorTrigger = true;
+    gridLocations.forEach((loc) => {
+      if (loc[0] === x && loc[1] === y) {
+        hits.push(loc);
+        errorTrigger = false;
+      }
+    });
+    if (errorTrigger) {
+      throw new Error("Invalid hit location, outside ship gridLocation");
     }
   }
 
   function isSunk() {
-    return hits.includes(0) ? false : true;
+    return gridLocations.every((loc) => hits.includes(loc));
   }
 
   return {
     type,
     length,
     hits,
+    get gridLocations() {
+      return gridLocations;
+    },
+    set gridLocations(array) {
+      gridLocations = array;
+    },
     registerHit,
     isSunk,
   };

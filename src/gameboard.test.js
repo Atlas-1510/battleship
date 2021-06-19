@@ -52,3 +52,21 @@ test("Prevent ship placement from overlapping gameboard border", () => {
     board.placeShip([2, 8], ship("carrier"), "vertical");
   }).toThrowError(new Error("Ship placement does not fit on board"));
 });
+
+test("Register hit on board", () => {
+  let board = gameboard();
+  board.recieveAttack(3, 4);
+  expect(board.grid[3][4]).toEqual({
+    occupied: false,
+    shipType: null,
+    hit: true,
+  });
+});
+
+test("Register hit on ship", () => {
+  let board = gameboard();
+  let testShip = ship("patrolBoat");
+  board.placeShip([3, 4], testShip, "vertical");
+  board.recieveAttack(3, 4);
+  expect(testShip.hits).toEqual([[3, 4]]);
+});
