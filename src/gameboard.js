@@ -7,8 +7,14 @@ function gameboard() {
     const x = coords[0];
     const y = coords[1];
 
-    for (let i = 0; i < ship.length; i++) {
-      grid[x][y + i] = true;
+    if (direction === "vertical") {
+      for (let i = 0; i < ship.length; i++) {
+        grid[x][y + i] = true;
+      }
+    } else if (direction === "horizontal") {
+      for (let i = 0; i < ship.length; i++) {
+        grid[x + i][y] = true;
+      }
     }
   }
 
