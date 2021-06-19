@@ -10,6 +10,8 @@ test("Vertically place a ship of length 2 at [3, 4] => [3, 5]", () => {
   board.placeShip([3, 4], ship(2), "vertical");
   expect(board.grid[3][4]).toBe(true);
   expect(board.grid[3][5]).toBe(true);
+  //   expect(board.grid[3][6]).toBe(false);
+  //   expect(board.grid[4][4]).toBe(false);
 });
 
 test("Horizontally place a ship of length 2 at [3, 4] => [4, 4]", () => {
@@ -17,4 +19,11 @@ test("Horizontally place a ship of length 2 at [3, 4] => [4, 4]", () => {
   board.placeShip([3, 4], ship(2), "vertical");
   expect(board.grid[3][4]).toBe(true);
   expect(board.grid[4][4]).toBe(true);
+});
+
+test("Prevent ship placement from overlapping gameboard border", () => {
+  expect(() => {
+    let board = gameboard();
+    board.placeShip([2, 8], ship(5), "vertical");
+  }).toThrowError(new Error("Ship placement does not fit on board"));
 });

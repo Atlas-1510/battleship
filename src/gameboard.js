@@ -9,10 +9,16 @@ function gameboard() {
 
     if (direction === "vertical") {
       for (let i = 0; i < ship.length; i++) {
+        if (x > 9 || y + i > 9) {
+          throw new Error("Ship placement does not fit on board");
+        }
         grid[x][y + i] = true;
       }
     } else if (direction === "horizontal") {
       for (let i = 0; i < ship.length; i++) {
+        if (x + i > 9 || y > 9) {
+          throw new Error("Ship placement does not fit on board");
+        }
         grid[x + i][y] = true;
       }
     }
