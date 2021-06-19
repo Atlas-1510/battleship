@@ -1,6 +1,6 @@
 import ship from "./ship";
 
-test("Ship factory produces ship of length 5", () => {
+test("When passed length equal to 5, ship factory produces ship of length 5", () => {
   let testShip = ship(5);
   expect(testShip.length).toBe(5);
 });
