@@ -34,7 +34,7 @@ function ship(type) {
   }
 
   function isSunk() {
-    return gridLocations.every((loc) => hits.includes(loc));
+    return gridLocations.length === hits.length ? true : false;
   }
 
   return {

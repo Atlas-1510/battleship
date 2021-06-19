@@ -34,3 +34,13 @@ test("Ship that has been fully destroyed registers as sunk", () => {
   testShip.registerHit(3, 5);
   expect(testShip.isSunk()).toBe(true);
 });
+
+test("Injured ship is not registered as sunk", () => {
+  let testShip = ship("patrolBoat");
+  testShip.gridLocations = [
+    [3, 4],
+    [3, 5],
+  ];
+  testShip.registerHit(3, 4);
+  expect(testShip.isSunk()).toBe(false);
+});

@@ -1,21 +1,19 @@
 function gameboard() {
   // Grid is a 10x10 array, with (0, 0) on  the top left corner and
   // (9, 9) on the bottom right corner
-  let grid = new Array(10).fill(new Array(10).fill(tile()));
 
-  function tile() {
-    return {
-      occupied: false,
-      shipType: null,
-      hit: false,
-    };
-  }
+  let grid = Array(10)
+    .fill()
+    .map(() =>
+      Array(10)
+        .fill()
+        .map(() => ({ occupied: false, shipType: null, hit: false }))
+    );
 
   let ships = [];
 
   function placeShip(coords, ship, direction) {
     const [x, y] = coords;
-
     for (let i = 0; i < ship.length; i++) {
       let a;
       let b;
@@ -28,10 +26,8 @@ function gameboard() {
         shipType: ship.type,
         hit: false,
       };
-
       ship.gridLocations.push([a, b]);
     }
-
     ships.push(ship);
   }
 
@@ -51,7 +47,17 @@ function gameboard() {
     }
   }
 
-  return { grid, ships, placeShip, recieveAttack };
+  function allShipsSunk() {
+    let result = true;
+    ships.forEach((ship) => {
+      if (ship.isSunk() === false) {
+        result = false;
+      }
+    });
+    return result;
+  }
+
+  return { grid, ships, placeShip, recieveAttack, allShipsSunk };
 }
 
 export default gameboard;
