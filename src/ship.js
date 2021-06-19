@@ -5,25 +5,18 @@ function ship(length) {
 
   let hits = new Array(length).fill(0);
 
-  function hit(sector) {
+  function registerHit(sector) {
     hits[sector] = 1;
   }
 
   function isSunk() {
-    let sunk = true;
-    for (let i = 0; i < hits.length; i++) {
-      if (hits[i] === 0) {
-        sunk = false;
-        break;
-      }
-    }
-    return sunk;
+    return hits.includes(0) ? false : true;
   }
 
   return {
     length,
     hits,
-    hit,
+    registerHit,
     isSunk,
   };
 }
