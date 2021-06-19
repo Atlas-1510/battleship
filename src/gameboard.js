@@ -12,31 +12,20 @@ function gameboard() {
   }
 
   function placeShip(coords, ship, direction) {
-    const x = coords[0];
-    const y = coords[1];
+    const [x, y] = coords;
 
-    if (direction === "vertical") {
-      for (let i = 0; i < ship.length; i++) {
-        if (x > 9 || y + i > 9) {
-          throw new Error("Ship placement does not fit on board");
-        }
-        grid[x][y + i] = {
-          occupied: true,
-          shipType: ship.type,
-          hit: false,
-        };
+    for (let i = 0; i < ship.length; i++) {
+      let a;
+      let b;
+      direction === "vertical" ? ([a, b] = [x, y + i]) : ([a, b] = [x + i, y]);
+      if (a > 9 || b > 9) {
+        throw new Error("Ship placement does not fit on board");
       }
-    } else if (direction === "horizontal") {
-      for (let i = 0; i < ship.length; i++) {
-        if (x + i > 9 || y > 9) {
-          throw new Error("Ship placement does not fit on board");
-        }
-        grid[x + i][y] = {
-          occupied: true,
-          shipType: ship.type,
-          hit: false,
-        };
-      }
+      grid[a][b] = {
+        occupied: true,
+        shipType: ship.type,
+        hit: false,
+      };
     }
   }
 
