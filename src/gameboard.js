@@ -48,13 +48,7 @@ function gameboard() {
   }
 
   function allShipsSunk() {
-    let result = true;
-    ships.forEach((ship) => {
-      if (ship.isSunk() === false) {
-        result = false;
-      }
-    });
-    return result;
+    return ships.every((ship) => ship.isSunk());
   }
 
   return { grid, ships, placeShip, recieveAttack, allShipsSunk };
